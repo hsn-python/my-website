@@ -1,13 +1,139 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>My Website</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Shopping Website</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <h1>Hello World!</h1>
-    <p>My first website.</p>
+    <!-- Side Menu -->
+    <div class="side-menu" id="side-menu">
+
+        <button class="close-button" id="close-menu">×</button>
+
+        <h2>Menu</h2>
+
+       <div class="menu-items">
+
+    <a href="index.html">Main</a>
+
+    <a href="shop.html">Shop</a>
+
+    <div class="category-menu">
+
+        <button id="category-button">
+            Categories
+            <span>▼</span>
+        </button>
+
+        <div class="category-dropdown" id="category-dropdown">
+
+            <a href="#">WHEY</a>
+            <a href="#">MASS</a>
+            <a href="#">CREATINE</a>
+            <a href="#">PRE WORKOUT</a>
+            <a href="#">VITAMINS</a>
+        </div>
+
+    </div>
+
+    <a href="#">Offers</a>
+
+    <a href="#">Contact Us</a>
+
+</div> </div>
+
+
+    <!-- Dark background -->
+    <div class="overlay" id="overlay"></div>
+    <!-- Cart -->
+<div class="cart-panel" id="cart-panel">
+
+    <button class="cart-close" id="cart-close">×</button>
+
+    <h2>Your Cart</h2>
+
+    <div id="cart-items">
+
+        <p class="empty-cart">Your cart is empty.</p>
+
+    </div>
+
+</div>
+
+
+    <header class="top-bar">
+
+    <button class="menu-button" id="menu-button">☰</button>
+
+    <div class="top-right-buttons">
+
+        <button class="search-button" id="search-button">
+            🔍
+        </button>
+
+        <button class="cart-button" id="cart-button">
+            🛒
+        </button>
+
+    </div>
+
+</header>
+
+
+    <!-- Search Bar -->
+    <div class="search-container" id="search-container">
+
+        <input
+            type="text"
+            placeholder="find our items"
+            id="search-input"
+        >
+
+    </div>
+
+
+    <!-- Image Slider -->
+    <section class="slider">
+
+        <div class="slider-track" id="slider-track">
+
+            <img src="https://picsum.photos/id/10/1200/500" alt="Picture 1">
+
+            <img src="https://picsum.photos/id/20/1200/500" alt="Picture 2">
+
+            <img src="https://picsum.photos/id/30/1200/500" alt="Picture 3">
+
+        </div>
+
+    </section>
+
+
+    <!-- About Us -->
+    <section class="about">
+
+        <h2>About Us</h2>
+
+        <p>
+            Welcome to our shopping website.
+            We provide quality products at affordable prices.
+        </p>
+
+        <p>📞 +961 70 123 456</p>
+
+        <p>✉️ info@mywebsite.com</p>
+
+    </section>
+
+
+    <script src="script.js"></script>
 
 </body>
+
 </html>

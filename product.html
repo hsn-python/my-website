@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Product</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+    <!-- Side Menu -->
+    <div class="side-menu" id="side-menu">
+
+        <button class="close-button" id="close-menu">×</button>
+
+        <h2>Menu</h2>
+
+        <div class="menu-items">
+
+            <a href="index.html">Main</a>
+
+            <a href="shop.html">Shop</a>
+
+            <div class="category-menu">
+
+                <button id="category-button">
+                    Categories
+                    <span>▼</span>
+                </button>
+
+                <div class="category-dropdown" id="category-dropdown">
+
+                    <a href="#">A</a>
+                    <a href="#">B</a>
+                    <a href="#">C</a>
+
+                </div>
+
+            </div>
+
+            <a href="#">Offers</a>
+
+            <a href="#">Contact Us</a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Dark overlay -->
+    <div class="overlay" id="overlay"></div>
+
+
+    <!-- Cart -->
+    <div class="cart-panel" id="cart-panel">
+
+        <button class="cart-close" id="cart-close">×</button>
+
+        <h2>Your Cart</h2>
+
+        <div id="cart-items">
+
+            <p class="empty-cart">Your cart is empty.</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Top Bar -->
+    <header class="top-bar">
+
+        <button class="menu-button" id="menu-button">☰</button>
+
+        <div class="top-right-buttons">
+
+            <button class="search-button" id="search-button">
+                🔍
+            </button>
+
+            <button class="cart-button" id="cart-button">
+                🛒
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- Search -->
+    <div class="search-container" id="search-container">
+
+        <input
+            type="text"
+            placeholder="find our itens"
+            id="search-input"
+        >
+
+    </div>
+
+
+    <!-- Product Information -->
+    <main class="product-page">
+
+        <div class="product-large-image">
+            Picture
+        </div>
+
+        <div class="product-information">
+
+            <h1 id="product-name">Item</h1>
+
+            <p id="product-weight">
+                Weight: --
+            </p>
+
+            <p id="product-price">
+                Price: $--
+            </p>
+
+            <p id="product-description">
+                Product description
+            </p>
+
+        </div>
+
+
+        <!-- Quantity and Add to Cart -->
+        <div class="purchase-area">
+
+            <div class="quantity-box">
+
+                <button id="minus-button">−</button>
+
+                <span id="quantity">1</span>
+
+                <button id="plus-button">+</button>
+
+            </div>
+
+            <button class="add-cart-button" id="add-cart-button">
+                Add to Cart
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
