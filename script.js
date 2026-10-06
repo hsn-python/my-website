@@ -2,7 +2,8 @@
    IMAGE SLIDER
 ========================= */
 
-const sliderTrack = document.getElementById("slider-track");
+const sliderTrack =
+    document.getElementById("slider-track");
 
 if (sliderTrack) {
 
@@ -18,7 +19,8 @@ if (sliderTrack) {
             currentSlide = 0;
         }
 
-        const moveAmount = currentSlide * 33.3333;
+        const moveAmount =
+            currentSlide * 33.3333;
 
         sliderTrack.style.transform =
             `translateX(-${moveAmount}%)`;
@@ -32,32 +34,45 @@ if (sliderTrack) {
    SIDE MENU
 ========================= */
 
-const menuButton = document.getElementById("menu-button");
-const closeMenu = document.getElementById("close-menu");
-const sideMenu = document.getElementById("side-menu");
-const overlay = document.getElementById("overlay");
+const menuButton =
+    document.getElementById("menu-button");
+
+const closeMenu =
+    document.getElementById("close-menu");
+
+const sideMenu =
+    document.getElementById("side-menu");
+
+const overlay =
+    document.getElementById("overlay");
 
 
 if (menuButton && sideMenu && overlay) {
 
-    menuButton.addEventListener("click", function() {
+    menuButton.addEventListener(
+        "click",
+        function() {
 
-        sideMenu.classList.add("open");
-        overlay.classList.add("open");
+            sideMenu.classList.add("open");
+            overlay.classList.add("open");
 
-    });
+        }
+    );
 
 }
 
 
 if (closeMenu) {
 
-    closeMenu.addEventListener("click", function() {
+    closeMenu.addEventListener(
+        "click",
+        function() {
 
-        sideMenu.classList.remove("open");
-        overlay.classList.remove("open");
+            sideMenu.classList.remove("open");
+            overlay.classList.remove("open");
 
-    });
+        }
+    );
 
 }
 
@@ -73,13 +88,16 @@ const categoryDropdown =
     document.getElementById("category-dropdown");
 
 
-if (categoryButton) {
+if (categoryButton && categoryDropdown) {
 
-    categoryButton.addEventListener("click", function() {
+    categoryButton.addEventListener(
+        "click",
+        function() {
 
-        categoryDropdown.classList.toggle("open");
+            categoryDropdown.classList.toggle("open");
 
-    });
+        }
+    );
 
 }
 
@@ -98,26 +116,35 @@ const searchInput =
     document.getElementById("search-input");
 
 
-if (searchButton) {
+if (searchButton && searchContainer) {
 
-    searchButton.addEventListener("click", function() {
+    searchButton.addEventListener(
+        "click",
+        function() {
 
-        searchContainer.classList.toggle("open");
+            searchContainer.classList.toggle("open");
 
 
-        if (searchContainer.classList.contains("open")) {
+            if (searchContainer.classList.contains("open")) {
 
-            overlay.classList.add("open");
+                if (overlay) {
+                    overlay.classList.add("open");
+                }
 
-            searchInput.focus();
+                if (searchInput) {
+                    searchInput.focus();
+                }
 
-        } else {
+            } else {
 
-            overlay.classList.remove("open");
+                if (overlay) {
+                    overlay.classList.remove("open");
+                }
+
+            }
 
         }
-
-    });
+    );
 
 }
 
@@ -138,9 +165,15 @@ const cartClose =
 
 function openCart() {
 
+    if (!cartPanel) {
+        return;
+    }
+
     cartPanel.classList.add("open");
 
-    overlay.classList.add("open");
+    if (overlay) {
+        overlay.classList.add("open");
+    }
 
     displayCart();
 
@@ -149,37 +182,67 @@ function openCart() {
 
 function closeCart() {
 
-    cartPanel.classList.remove("open");
+    if (cartPanel) {
+        cartPanel.classList.remove("open");
+    }
 
-    overlay.classList.remove("open");
+    if (overlay) {
+        overlay.classList.remove("open");
+    }
 
 }
 
 
 if (cartButton) {
 
-    cartButton.addEventListener("click", openCart);
+    cartButton.addEventListener(
+        "click",
+        openCart
+    );
 
 }
 
 
 if (cartClose) {
 
-    cartClose.addEventListener("click", closeCart);
+    cartClose.addEventListener(
+        "click",
+        closeCart
+    );
 
 }
 
-overlay.addEventListener("click", function() {
 
-    sideMenu.classList.remove("open");
+/* =========================
+   CLICK DARK AREA
+========================= */
 
-    cartPanel.classList.remove("open");
+if (overlay) {
 
-    searchContainer.classList.remove("open");
+    overlay.addEventListener(
+        "click",
+        function() {
 
-    overlay.classList.remove("open");
+            if (sideMenu) {
+                sideMenu.classList.remove("open");
+            }
 
-});
+            if (cartPanel) {
+                cartPanel.classList.remove("open");
+            }
+
+            if (searchContainer) {
+                searchContainer.classList.remove("open");
+            }
+
+            overlay.classList.remove("open");
+
+        }
+    );
+
+}
+
+
 /* =========================
    CART DATA
 ========================= */
@@ -210,16 +273,22 @@ function saveCart(cart) {
 }
 
 
+/* =========================
+   DISPLAY CART
+========================= */
+
 function displayCart() {
 
     const cartItems =
         document.getElementById("cart-items");
 
-    if (!cartItems) {
+    if (!cartItems || !cartPanel) {
         return;
     }
 
-    // Remove old bottom section
+
+    /* Remove previous total section */
+
     const oldBottom =
         cartPanel.querySelector(".cart-bottom");
 
@@ -227,10 +296,15 @@ function displayCart() {
         oldBottom.remove();
     }
 
-    const cart = getCart();
 
-    // Calculate total
+    const cart =
+        getCart();
+
+
+    /* Calculate grand total */
+
     let grandTotal = 0;
+
 
     cart.forEach(function(item) {
 
@@ -240,7 +314,10 @@ function displayCart() {
     });
 
 
-    // Empty cart
+    /* =========================
+       EMPTY CART
+    ========================= */
+
     if (cart.length === 0) {
 
         cartItems.innerHTML = `
@@ -249,7 +326,14 @@ function displayCart() {
             </p>
         `;
 
-    } else {
+    }
+
+
+    /* =========================
+       CART WITH ITEMS
+    ========================= */
+
+    else {
 
         cartItems.innerHTML = "";
 
@@ -275,18 +359,26 @@ function displayCart() {
 
                 <div class="cart-item-info">
 
-                    <h3>${item.name}</h3>
+                    <h3>
+                        ${item.name}
+                    </h3>
 
-                    <p>Weight: ${item.weight}</p>
+                    <p>
+                        Weight: ${item.weight}
+                    </p>
 
-                    <p>Quantity: ${item.quantity}</p>
+                    <p>
+                        Quantity: ${item.quantity}
+                    </p>
 
-                    <p>$${item.price}</p>
+                    <p>
+                        $${item.price}
+                    </p>
 
                 </div>
 
                 <div class="cart-item-total">
-                    $${itemTotal}
+                    $${itemTotal.toFixed(2)}
                 </div>
 
                 <button
@@ -303,46 +395,54 @@ function displayCart() {
         });
 
 
-        // Remove item buttons
+        /* Remove buttons */
+
         const removeButtons =
-            document.querySelectorAll(
+            cartItems.querySelectorAll(
                 ".remove-cart-item"
             );
 
 
-        removeButtons.forEach(function(button) {
+        removeButtons.forEach(
+            function(button) {
 
-            button.addEventListener(
-                "click",
-                function() {
+                button.addEventListener(
+                    "click",
+                    function() {
 
-                    const id =
-                        Number(button.dataset.id);
-
-                    let cart = getCart();
-
-
-                    cart =
-                        cart.filter(function(item) {
-
-                            return item.id !== id;
-
-                        });
+                        const id =
+                            Number(
+                                button.dataset.id
+                            );
 
 
-                    saveCart(cart);
+                        const updatedCart =
+                            getCart().filter(
+                                function(item) {
 
-                    displayCart();
+                                    return item.id !== id;
 
-                }
-            );
+                                }
+                            );
 
-        });
+
+                        saveCart(updatedCart);
+
+                        displayCart();
+
+                    }
+                );
+
+            }
+        );
 
     }
 
 
-    // Bottom section
+    /* =========================
+       CART BOTTOM
+    ========================= */
+
     const cartBottom =
         document.createElement("div");
 
@@ -357,7 +457,7 @@ function displayCart() {
         </div>
 
         <div class="cart-total">
-            $${grandTotal}
+            $${grandTotal.toFixed(2)}
         </div>
 
     `;
@@ -366,78 +466,6 @@ function displayCart() {
     cartPanel.appendChild(cartBottom);
 
 }
-
-
-    /* =========================
-       REMOVE ITEMS
-    ========================= */
-
-    const removeButtons =
-        document.querySelectorAll(".remove-cart-item");
-
-
-    removeButtons.forEach(function(button) {
-
-        button.addEventListener(
-            "click",
-            function() {
-
-                const itemId =
-                    Number(button.dataset.id);
-
-
-                const updatedCart =
-                    getCart().filter(function(item) {
-
-                        return item.id !== itemId;
-
-                    });
-
-
-                saveCart(updatedCart);
-
-
-                displayCart();
-
-            }
-        );
-
-    });
-
-
-    /* =========================
-       CART TOTAL
-    ========================= */
-
-    const cartBottom =
-        document.createElement("div");
-
-    cartBottom.className = "cart-bottom";
-
-
-    cartBottom.innerHTML = `
-
-        <div class="shipping-message">
-
-            The shipping fee is calculated on check-out
-
-        </div>
-
-
-        <div class="cart-total">
-
-            Total: $${totalPrice.toFixed(2)}
-
-        </div>
-
-    `;
-
-
-    cartPanel.appendChild(cartBottom);
-
-;
-
-
 
 
 /* =========================
@@ -451,7 +479,8 @@ const products = [
         name: "Item A",
         weight: "500 g",
         price: 10,
-        description: "This is the description for Item A."
+        description:
+            "This is the description for Item A."
     },
 
     {
@@ -459,7 +488,8 @@ const products = [
         name: "Item B",
         weight: "750 g",
         price: 15,
-        description: "This is the description for Item B."
+        description:
+            "This is the description for Item B."
     },
 
     {
@@ -467,7 +497,8 @@ const products = [
         name: "Item C",
         weight: "1 kg",
         price: 20,
-        description: "This is the description for Item C."
+        description:
+            "This is the description for Item C."
     },
 
     {
@@ -475,7 +506,8 @@ const products = [
         name: "Item D",
         weight: "500 g",
         price: 12,
-        description: "This is the description for Item D."
+        description:
+            "This is the description for Item D."
     },
 
     {
@@ -483,7 +515,8 @@ const products = [
         name: "Item E",
         weight: "750 g",
         price: 18,
-        description: "This is the description for Item E."
+        description:
+            "This is the description for Item E."
     },
 
     {
@@ -491,7 +524,8 @@ const products = [
         name: "Item F",
         weight: "1 kg",
         price: 25,
-        description: "This is the description for Item F."
+        description:
+            "This is the description for Item F."
     },
 
     {
@@ -499,7 +533,8 @@ const products = [
         name: "Item G",
         weight: "500 g",
         price: 11,
-        description: "This is the description for Item G."
+        description:
+            "This is the description for Item G."
     },
 
     {
@@ -507,7 +542,8 @@ const products = [
         name: "Item H",
         weight: "750 g",
         price: 16,
-        description: "This is the description for Item H."
+        description:
+            "This is the description for Item H."
     },
 
     {
@@ -515,7 +551,8 @@ const products = [
         name: "Item I",
         weight: "1 kg",
         price: 22,
-        description: "This is the description for Item I."
+        description:
+            "This is the description for Item I."
     },
 
     {
@@ -523,7 +560,8 @@ const products = [
         name: "Item J",
         weight: "500 g",
         price: 14,
-        description: "This is the description for Item J."
+        description:
+            "This is the description for Item J."
     },
 
     {
@@ -531,7 +569,8 @@ const products = [
         name: "Item K",
         weight: "750 g",
         price: 17,
-        description: "This is the description for Item K."
+        description:
+            "This is the description for Item K."
     },
 
     {
@@ -539,7 +578,8 @@ const products = [
         name: "Item L",
         weight: "1 kg",
         price: 24,
-        description: "This is the description for Item L."
+        description:
+            "This is the description for Item L."
     },
 
     {
@@ -547,7 +587,8 @@ const products = [
         name: "Item M",
         weight: "500 g",
         price: 13,
-        description: "This is the description for Item M."
+        description:
+            "This is the description for Item M."
     },
 
     {
@@ -555,7 +596,8 @@ const products = [
         name: "Item N",
         weight: "750 g",
         price: 19,
-        description: "This is the description for Item N."
+        description:
+            "This is the description for Item N."
     },
 
     {
@@ -563,7 +605,8 @@ const products = [
         name: "Item O",
         weight: "1 kg",
         price: 21,
-        description: "This is the description for Item O."
+        description:
+            "This is the description for Item O."
     },
 
     {
@@ -571,7 +614,8 @@ const products = [
         name: "Item P",
         weight: "500 g",
         price: 16,
-        description: "This is the description for Item P."
+        description:
+            "This is the description for Item P."
     },
 
     {
@@ -579,7 +623,8 @@ const products = [
         name: "Item Q",
         weight: "750 g",
         price: 20,
-        description: "This is the description for Item Q."
+        description:
+            "This is the description for Item Q."
     },
 
     {
@@ -587,7 +632,8 @@ const products = [
         name: "Item R",
         weight: "1 kg",
         price: 26,
-        description: "This is the description for Item R."
+        description:
+            "This is the description for Item R."
     },
 
     {
@@ -595,7 +641,8 @@ const products = [
         name: "Item S",
         weight: "500 g",
         price: 15,
-        description: "This is the description for Item S."
+        description:
+            "This is the description for Item S."
     },
 
     {
@@ -603,7 +650,8 @@ const products = [
         name: "Item T",
         weight: "750 g",
         price: 18,
-        description: "This is the description for Item T."
+        description:
+            "This is the description for Item T."
     }
 
 ];
@@ -629,53 +677,81 @@ if (productsContainer) {
         productsContainer.innerHTML = "";
 
 
-        products.forEach(function(product) {
-
-            const productBox =
-                document.createElement("div");
-
-            productBox.className =
-                "product-box";
+        const start =
+            (currentPage - 1) *
+            itemsPerPage;
 
 
-            productBox.innerHTML = `
-
-                <div class="product-image">
-                    Picture
-                </div>
-
-                <p>${product.name}</p>
-
-            `;
+        const end =
+            start + itemsPerPage;
 
 
-            productBox.addEventListener(
-                "click",
-                function() {
-
-                    window.location.href =
-                        "product.html?id=" +
-                        product.id;
-
-                }
-            );
+        const pageProducts =
+            products.slice(start, end);
 
 
-            productsContainer.appendChild(productBox);
+        pageProducts.forEach(
+            function(product) {
 
-        });
+                const productBox =
+                    document.createElement("div");
+
+
+                productBox.className =
+                    "product-box";
+
+
+                productBox.innerHTML = `
+
+                    <div class="product-image">
+                        Picture
+                    </div>
+
+                    <p>
+                        ${product.name}
+                    </p>
+
+                `;
+
+
+                productBox.addEventListener(
+                    "click",
+                    function() {
+
+                        window.location.href =
+                            "product.html?id=" +
+                            product.id;
+
+                    }
+                );
+
+
+                productsContainer.appendChild(
+                    productBox
+                );
+
+            }
+        );
 
     }
 
 
     const pageNumbers =
-        document.querySelectorAll(".page-number");
+        document.querySelectorAll(
+            ".page-number"
+        );
+
 
     const previousPage =
-        document.getElementById("previous-page");
+        document.getElementById(
+            "previous-page"
+        );
+
 
     const nextPage =
-        document.getElementById("next-page");
+        document.getElementById(
+            "next-page"
+        );
 
 
     function updatePage() {
@@ -683,96 +759,128 @@ if (productsContainer) {
         showProducts();
 
 
-        pageNumbers.forEach(function(button) {
+        pageNumbers.forEach(
+            function(button) {
 
-            const page =
-                Number(button.dataset.page);
+                const page =
+                    Number(
+                        button.dataset.page
+                    );
 
 
-            if (page === currentPage) {
+                if (page === currentPage) {
 
-                button.classList.add("active");
+                    button.classList.add(
+                        "active"
+                    );
+
+                } else {
+
+                    button.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+
+        if (previousPage) {
+
+            if (currentPage === 1) {
+
+                previousPage.style.display =
+                    "none";
 
             } else {
 
-                button.classList.remove("active");
+                previousPage.style.display =
+                    "block";
 
             }
-
-        });
-
-
-        if (currentPage === 1) {
-
-            previousPage.style.display = "none";
-
-        } else {
-
-            previousPage.style.display = "block";
 
         }
 
 
-        if (currentPage === 3) {
+        if (nextPage) {
 
-            nextPage.style.display = "none";
+            if (currentPage === 3) {
 
-        } else {
+                nextPage.style.display =
+                    "none";
 
-            nextPage.style.display = "block";
+            } else {
+
+                nextPage.style.display =
+                    "block";
+
+            }
 
         }
 
     }
 
 
-    pageNumbers.forEach(function(button) {
+    pageNumbers.forEach(
+        function(button) {
 
-        button.addEventListener(
+            button.addEventListener(
+                "click",
+                function() {
+
+                    currentPage =
+                        Number(
+                            button.dataset.page
+                        );
+
+                    updatePage();
+
+                }
+            );
+
+        }
+    );
+
+
+    if (previousPage) {
+
+        previousPage.addEventListener(
             "click",
             function() {
 
-                currentPage =
-                    Number(button.dataset.page);
+                if (currentPage > 1) {
 
-                updatePage();
+                    currentPage--;
+
+                    updatePage();
+
+                }
 
             }
         );
 
-    });
+    }
 
 
-    previousPage.addEventListener(
-        "click",
-        function() {
+    if (nextPage) {
 
-            if (currentPage > 1) {
+        nextPage.addEventListener(
+            "click",
+            function() {
 
-                currentPage--;
+                if (currentPage < 3) {
 
-                updatePage();
+                    currentPage++;
 
-            }
+                    updatePage();
 
-        }
-    );
-
-
-    nextPage.addEventListener(
-        "click",
-        function() {
-
-            if (currentPage < 3) {
-
-                currentPage++;
-
-                updatePage();
+                }
 
             }
+        );
 
-        }
-    );
+    }
 
 
     updatePage();
@@ -785,135 +893,189 @@ if (productsContainer) {
 ========================= */
 
 const productName =
-    document.getElementById("product-name");
+    document.getElementById(
+        "product-name"
+    );
+
 
 if (productName) {
 
     const urlParams =
-        new URLSearchParams(window.location.search);
+        new URLSearchParams(
+            window.location.search
+        );
+
 
     const productId =
-        Number(urlParams.get("id"));
+        Number(
+            urlParams.get("id")
+        );
 
 
     const product =
-        products.find(function(item) {
+        products.find(
+            function(item) {
 
-            return item.id === productId;
+                return item.id === productId;
 
-        });
+            }
+        );
 
 
     if (product) {
 
-        document.getElementById("product-name")
-            .textContent = product.name;
+        document.getElementById(
+            "product-name"
+        ).textContent =
+            product.name;
 
-        document.getElementById("product-weight")
-            .textContent =
-            "Weight: " + product.weight;
 
-        document.getElementById("product-price")
-            .textContent =
-            "Price: $" + product.price;
+        document.getElementById(
+            "product-weight"
+        ).textContent =
+            "Weight: " +
+            product.weight;
 
-        document.getElementById("product-description")
-            .textContent =
+
+        document.getElementById(
+            "product-price"
+        ).textContent =
+            "Price: $" +
+            product.price;
+
+
+        document.getElementById(
+            "product-description"
+        ).textContent =
             product.description;
 
+
+        /* =========================
+           QUANTITY
+        ========================= */
 
         let quantity = 1;
 
 
         const quantityDisplay =
-            document.getElementById("quantity");
+            document.getElementById(
+                "quantity"
+            );
+
 
         const minusButton =
-            document.getElementById("minus-button");
+            document.getElementById(
+                "minus-button"
+            );
+
 
         const plusButton =
-            document.getElementById("plus-button");
+            document.getElementById(
+                "plus-button"
+            );
 
 
-        plusButton.addEventListener(
-            "click",
-            function() {
+        if (plusButton) {
 
-                quantity++;
+            plusButton.addEventListener(
+                "click",
+                function() {
 
-                quantityDisplay.textContent =
-                    quantity;
-
-            }
-        );
-
-
-        minusButton.addEventListener(
-            "click",
-            function() {
-
-                if (quantity > 1) {
-
-                    quantity--;
+                    quantity++;
 
                     quantityDisplay.textContent =
                         quantity;
 
                 }
+            );
 
-            }
-        );
-
-
-        const addCartButton =
-            document.getElementById("add-cart-button");
+        }
 
 
-        addCartButton.addEventListener(
-            "click",
-            function() {
+        if (minusButton) {
 
-                const cart = getCart();
+            minusButton.addEventListener(
+                "click",
+                function() {
 
+                    if (quantity > 1) {
 
-                const existingItem =
-                    cart.find(function(item) {
+                        quantity--;
 
-                        return item.id === product.id;
+                        quantityDisplay.textContent =
+                            quantity;
 
-                    });
-
-
-                if (existingItem) {
-
-                    existingItem.quantity +=
-                        quantity;
-
-                } else {
-
-                    cart.push({
-
-                        id: product.id,
-
-                        name: product.name,
-
-                        weight: product.weight,
-
-                        price: product.price,
-
-                        quantity: quantity
-
-                    });
+                    }
 
                 }
+            );
+
+        }
 
 
-                saveCart(cart);
+        /* =========================
+           ADD TO CART
+        ========================= */
 
-                openCart();
+        const addCartButton =
+            document.getElementById(
+                "add-cart-button"
+            );
 
-            }
-        );
+
+        if (addCartButton) {
+
+            addCartButton.addEventListener(
+                "click",
+                function() {
+
+                    const cart =
+                        getCart();
+
+
+                    const existingItem =
+                        cart.find(
+                            function(item) {
+
+                                return item.id ===
+                                    product.id;
+
+                            }
+                        );
+
+
+                    if (existingItem) {
+
+                        existingItem.quantity +=
+                            quantity;
+
+                    } else {
+
+                        cart.push({
+
+                            id: product.id,
+
+                            name: product.name,
+
+                            weight: product.weight,
+
+                            price: product.price,
+
+                            quantity: quantity
+
+                        });
+
+                    }
+
+
+                    saveCart(cart);
+
+                    openCart();
+
+                }
+            );
+
+        }
 
     }
 
